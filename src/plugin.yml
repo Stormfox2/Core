@@ -2,3 +2,8 @@ name: Core
 version: 0.1
 author: Stormfox2
 main: de.stormfox2.core.Core
+
+commands:
+  Export:
+
+  

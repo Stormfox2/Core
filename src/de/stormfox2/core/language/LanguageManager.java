@@ -84,4 +84,8 @@ public class LanguageManager {
 		return players.get(uuid.toString());
 	}
 	
+	public Language getLanguage(String langID) {
+		return languages.get(langID);
+	}
+	
 }

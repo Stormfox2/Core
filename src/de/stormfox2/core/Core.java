@@ -1,7 +1,11 @@
 package de.stormfox2.core;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.stormfox2.core.commands.ExportCommand;
 import de.stormfox2.core.language.LanguageManager;
 import de.stormfox2.core.mysql.MySQL;
 
@@ -16,6 +20,7 @@ public class Core extends JavaPlugin{
 		
 		new MySQL();
 		new LanguageManager();
+		getCommand("export").setExecutor(new ExportCommand());
 		
 	}
 	

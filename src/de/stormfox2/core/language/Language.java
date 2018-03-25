@@ -62,4 +62,8 @@ public class Language {
 	public String getName() {
 		return name;
 	}
+	
+	public HashMap<String, String> getKeys(){
+		return keys;
+	}
 }
