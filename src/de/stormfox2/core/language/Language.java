@@ -8,10 +8,10 @@ import java.util.HashMap;
 import de.stormfox2.core.mysql.MySQL;
 
 public class Language {
-	
+	MySQL mySQL;
 	private String id;
 	private String name;
-	
+
 	private HashMap<String, String> keys;
 	
 	public Language(String id, String name) {
@@ -24,7 +24,7 @@ public class Language {
 	}
 	
 	private void init() {
-		MySQL mySQL = MySQL.getInstance();
+		mySQL = MySQL.getInstance();
 		String sql = "SELECT ID, Value FROM LanguageLine WHERE LanguageID=?";
 		try {
 			PreparedStatement request = mySQL.getConnection().prepareStatement(sql);
@@ -46,6 +46,22 @@ public class Language {
 	public void addValue(String key, String value) {
 		keys.put(key, value);
 	}
+
+	public void insertValue(String key, String value) {
+		mySQL = MySQL.getInstance();
+		String sql = "INSERT INTO LanguageLine values(?,?,?);";
+		try {
+			PreparedStatement request = mySQL.getConnection().prepareStatement(sql);
+			request.setString(1, key);
+			request.setString(2, getId());
+			request.setString(3, value);
+			request.executeUpdate();
+			request.close();
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+
+	}
 	
 	public int getValueLength() {
 		return keys.size();
@@ -61,5 +77,9 @@ public class Language {
 
 	public String getName() {
 		return name;
+	}
+
+	public HashMap<String, String> getKeys() {
+		return keys;
 	}
 }

@@ -47,15 +47,15 @@ public class LanguageManager {
 		}
 	}
 	
-	public String getValue(String languageID, String key) {
-		return languages.get(languageID).getValue(key);
+	public static String getValue(String languageID, String key) {
+		return getInstance().languages.get(languageID).getValue(key);
 	}
 	
-	public String getValue(Player player, String key) {
+	public static String getValue(Player player, String key) {
 		return getValue(player.getUniqueId(), key);
 	}
 	
-	public String getValue(UUID uuid, String key) {
+	public static String getValue(UUID uuid, String key) {
 		return getValue(getPlayerLanguage(uuid), key);
 	}
 	
@@ -78,10 +78,23 @@ public class LanguageManager {
 		return players.get(uuid);
 	}
 	
-	public String getPlayerLanguage(UUID uuid) {
-
-		if(!players.containsKey(uuid.toString())) return "";
-		return players.get(uuid.toString());
+	public static String getPlayerLanguage(UUID uuid) {
+		if(!getInstance().players.containsKey(uuid.toString())) return "";
+		return getInstance().players.get(uuid.toString());
 	}
-	
+
+	public static void registerDefault(String key, String value){
+		LanguageManager instance = getInstance();
+		for(Language lang : instance.languages.values()) {
+			if(lang.getValue(key) == null) {
+				lang.addValue(key, value);
+				lang.insertValue(key, value);
+			}
+		}
+	}
+
+	public Language getLanguage(String langID) {
+		return languages.get(langID);
+	}
+
 }
