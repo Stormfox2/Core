@@ -22,7 +22,7 @@ public class MySQL {
 	public MySQL() {
 		instance = this;
 		
-		config = new ConfigurationFile("mysql.yml");
+		config = new ConfigurationFile("mysql.yml", "mysql.yml");
 		
 		setDefaults();
 		getData();
