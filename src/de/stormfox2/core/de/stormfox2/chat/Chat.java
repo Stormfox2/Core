@@ -8,7 +8,7 @@ public interface Chat
 {
     public static void sendMessage(CommandSender sender, MessageType messageType, String path)
     {
-        sendMessage(sender, messageType, "Server", path, new ChatArg[] {});
+        sendMessage(sender, messageType, "§6V§eontex§8.§eNET", path, new ChatArg[] {});
     }
 
     public static void sendMessage(CommandSender sender, MessageType messageType, String name, String path)
@@ -18,7 +18,7 @@ public interface Chat
 
     public static void sendMessage(CommandSender sender, MessageType messageType, String path, ChatArg... args)
     {
-        sendMessage(sender, messageType, "Server", path, args);
+        sendMessage(sender, messageType, "§6V§eontex§8.§eNET", path, args);
     }
 
     public static void sendMessage(CommandSender sender, MessageType messageType, String name, String path, ChatArg... args)
@@ -29,13 +29,14 @@ public interface Chat
 
         switch (messageType)
         {
-            case NONE:
-                argColorTag = "§f";
-                msgColorTag = "§f";
+            case INFO:
+                nameColorTag = "§6";
+                argColorTag = "§6";
+                msgColorTag = "§7";
                 break;
             case NORMAL:
-                nameColorTag = "§6";
-                argColorTag = "§f";
+                nameColorTag = "§e";
+                argColorTag = "§e";
                 msgColorTag = "§7";
                 break;
             case ERROR:
@@ -44,21 +45,25 @@ public interface Chat
                 msgColorTag = "§7";
                 break;
             default:
-                argColorTag = "§f";
+                nameColorTag = "§e";
+                msgColorTag = "§f";
                 argColorTag = "§f";
                 break;
         }
         String message = "";
         if(!(sender instanceof Player))
-            message = LanguageManager.getValue("de_de", path);
-        else
-            message = LanguageManager.getValue((Player)sender, path);
+            message = LanguageManager.getValue("de-de", path);
+        else{
+            Player p = (Player) sender;
+            message = LanguageManager.getValue(p, path);
+        }
 
         // Message Formatting
         message = replaceArgs(message, args, argColorTag, msgColorTag);
 
+
         // Name Formatting
-        name = (name.equals("")) ? msgColorTag : "§7[" + nameColorTag + name + "§7] " + msgColorTag;
+        name = (name.equals("")) ? msgColorTag : "§7[" + nameColorTag + name + "§7] ";
 
         sender.sendMessage(name + message);
     }

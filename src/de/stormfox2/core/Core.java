@@ -2,6 +2,7 @@ package de.stormfox2.core;
 
 import de.stormfox2.core.commands.ExportCommand;
 import de.stormfox2.core.file.ConfigurationFile;
+import de.stormfox2.core.player.CorePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.stormfox2.core.language.LanguageManager;

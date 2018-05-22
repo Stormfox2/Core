@@ -42,7 +42,6 @@ public class LanguageManager {
 			}
 			request.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -73,13 +72,14 @@ public class LanguageManager {
 	
 	public String getPlayerLanguage(Player p) {
 		String uuid = p.getUniqueId().toString();
-		
-		if(!players.containsKey(uuid)) return "";
-		return players.get(uuid);
+
+		if(!(players.containsKey(p.getUniqueId().toString())))
+			return "de-de";
+		return players.get(p.getUniqueId().toString());
 	}
 	
 	public static String getPlayerLanguage(UUID uuid) {
-		if(!getInstance().players.containsKey(uuid.toString())) return "";
+		if(!getInstance().players.containsKey(uuid.toString())) return "de-de";
 		return getInstance().players.get(uuid.toString());
 	}
 
@@ -95,6 +95,10 @@ public class LanguageManager {
 
 	public Language getLanguage(String langID) {
 		return languages.get(langID);
+	}
+
+	public void addPlayer(){
+
 	}
 
 }

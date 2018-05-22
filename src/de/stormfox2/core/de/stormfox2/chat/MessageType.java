@@ -4,5 +4,6 @@ public enum MessageType
 {
     NONE,
     NORMAL,
+    INFO,
     ERROR;
 }

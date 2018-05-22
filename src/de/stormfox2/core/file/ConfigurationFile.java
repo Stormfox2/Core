@@ -52,7 +52,7 @@ public class ConfigurationFile extends YamlConfiguration {
 
 		save();
 	}
-	
+
 	public void save() {
 		try {
 			save(file);

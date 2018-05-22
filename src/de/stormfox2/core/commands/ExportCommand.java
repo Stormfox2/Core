@@ -22,7 +22,7 @@ public class ExportCommand implements CommandExecutor {
     String usage = "/export <language>";
 
     public ExportCommand(){
-        LanguageManager.registerDefault("core.error.onlyconsole", "&cThis Command is only for console users.");
+        LanguageManager.registerDefault("core.error.onlyconsole", "This Command is only for console users.");
         LanguageManager.registerDefault("core.error.invalidArgs", "False usage of the command!");
         LanguageManager.registerDefault("core.command.usage", "Usage: %c");
         LanguageManager.registerDefault("core.info.createdConfig", "Successfully created the config %c");
@@ -36,21 +36,22 @@ public class ExportCommand implements CommandExecutor {
         if(!(sender instanceof ConsoleCommandSender)){
             //sender.sendMessage(LanguageManager.getInstance().getValue((Player)sender, "core.error.onlyconsole"));
             Chat.sendMessage(sender, MessageType.ERROR, "Vontex.NET", "core.error.onlyconsole");
-            return true;
+            //return true;
         }
         if (!(args.length == 1)){
             //sender.sendMessage(LanguageManager.getInstance().getValue(p, "core.error.invalidArgs"));
             Chat.sendMessage(sender, MessageType.ERROR, "Vontex.NET", "core.error.invalidArgs");
             //sender.sendMessage(LanguageManager.getInstance().getValue(p, "core.command.usage") + usage);
             Chat.sendMessage(sender, MessageType.ERROR, "Vontex.NET","core.command.usage",new ChatArg("%c", usage));
-        } else {
+            return true;
+        }
             Language lang = LanguageManager.getInstance().getLanguage(args[0]);
             if(lang == null){
                 Chat.sendMessage(sender, MessageType.ERROR, "Vontex.NET", "core.error.languageNotExist", new ChatArg("%c", args[0]));
                 return true;
             }
             HashMap<String, String> keys = lang.getKeys();
-            ConfigurationFile file = new ConfigurationFile("languages/" + lang.getName());
+            ConfigurationFile file = new ConfigurationFile("languages/" + lang.getName() + ".yml");
             file.options().copyDefaults(true);
 
             for(Map.Entry<String, String> entry : keys.entrySet())
@@ -58,7 +59,6 @@ public class ExportCommand implements CommandExecutor {
 
             file.save();
             Chat.sendMessage(sender, MessageType.NORMAL, "Vontex.NET", "core.info.createdConfig");
-        }
-        return true;
+            return true;
     }
 }
