@@ -14,12 +14,15 @@ public class LanguageManager {
 	public static LanguageManager instance;
 	private HashMap<String, String> players;
 	private HashMap<String, Language> languages;
-	
+	private HashMap<String, String> languageNames;
+
 	public LanguageManager() {
 		instance = this;
 		
 		players = new HashMap<>();
 		languages = new HashMap<>();
+		languageNames = new HashMap<>();
+
 		
 		
 		init();
@@ -93,12 +96,13 @@ public class LanguageManager {
 		}
 	}
 
-	public Language getLanguage(String langID) {
-		return languages.get(langID);
+	public static Language getLanguage(String langID) {
+		return getInstance().languages.get(langID);
 	}
 
-	public void addPlayer(){
-
+	public String getLanguageId(String name) {
+		return languageNames.get(name);
 	}
+
 
 }

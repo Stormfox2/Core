@@ -4,13 +4,8 @@ import de.stormfox2.core.language.LanguageManager;
 import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
 
-public interface Chat
+public class Chat
 {
-    public static void sendMessage(CommandSender sender, MessageType messageType, String path)
-    {
-        sendMessage(sender, messageType, "§6V§eontex§8.§eNET", path, new ChatArg[] {});
-    }
-
     public static void sendMessage(CommandSender sender, MessageType messageType, String name, String path)
     {
         sendMessage(sender, messageType, name, path, new ChatArg[] {});

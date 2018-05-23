@@ -1,8 +1,8 @@
 package de.stormfox2.core;
 
-import de.stormfox2.core.commands.ExportCommand;
+import de.stormfox2.core.command.commands.ExportCommand;
+import de.stormfox2.core.command.commands.ImportCommand;
 import de.stormfox2.core.file.ConfigurationFile;
-import de.stormfox2.core.player.CorePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.stormfox2.core.language.LanguageManager;
@@ -36,10 +36,31 @@ public class Core extends JavaPlugin{
 		cfg.addDefault("config.onlyAPIMode", "false");
 		cfg.save();
 
+		createTranslations();
+
+
+		this.getCommand("import").setExecutor(new ImportCommand());
 		this.getCommand("export").setExecutor(new ExportCommand());
 
 	}
-	
+
+	private void createTranslations() {
+		LanguageManager.registerDefault("core.error.onlyconsole", "This Command is only for console users.");
+		LanguageManager.registerDefault("core.error.nopermissions", "You dont have the permission to use this command!");
+		LanguageManager.registerDefault("core.error.invalidArgs", "False usage of the command!");
+		LanguageManager.registerDefault("core.info.usage", "Usage: %c");
+		LanguageManager.registerDefault("core.info.createdConfig", "Successfully created the config");
+		LanguageManager.registerDefault("core.error.languageNotExist", "Language %c not exist!");
+		LanguageManager.registerDefault("core.lang.serveronly.on", "Only servermode turned §aon");
+		LanguageManager.registerDefault("core.lang.serveronly.off", "Only servermode turned §coff");
+		LanguageManager.registerDefault("core.lang.deleteothers.on", "Key overriding turned §aon");
+		LanguageManager.registerDefault("core.lang.deleteothers.off", "Key overriding turned §coff");
+		LanguageManager.registerDefault("core.lang.all", "All keys replaced! Globally");
+		LanguageManager.registerDefault("core.lang.this", "All keys replaced! Only Serversite");
+		LanguageManager.registerDefault("core.lang.addall", "Added new keys! Globally");
+		LanguageManager.registerDefault("core.lang.addthis", "Added new keys! Only Serversite");
+	}
+
 	@Override
 	public void onDisable() {
 		MySQL.getInstance().disconnect();

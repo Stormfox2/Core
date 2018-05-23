@@ -1,4 +1,4 @@
-package de.stormfox2.core.commands;
+package de.stormfox2.core.command.commands;
 
 import de.stormfox2.core.de.stormfox2.chat.Chat;
 import de.stormfox2.core.de.stormfox2.chat.ChatArg;
@@ -6,29 +6,18 @@ import de.stormfox2.core.de.stormfox2.chat.MessageType;
 import de.stormfox2.core.file.ConfigurationFile;
 import de.stormfox2.core.language.Language;
 import de.stormfox2.core.language.LanguageManager;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class ExportCommand implements CommandExecutor {
     String usage = "/export <language>";
 
     public ExportCommand(){
-        LanguageManager.registerDefault("core.error.onlyconsole", "This Command is only for console users.");
-        LanguageManager.registerDefault("core.error.invalidArgs", "False usage of the command!");
-        LanguageManager.registerDefault("core.command.usage", "Usage: %c");
-        LanguageManager.registerDefault("core.info.createdConfig", "Successfully created the config %c");
-        LanguageManager.registerDefault("core.error.languageNotExist", "Language %c not exist!");
-
-
     }
 
     @Override
@@ -45,14 +34,17 @@ public class ExportCommand implements CommandExecutor {
             Chat.sendMessage(sender, MessageType.ERROR, "Vontex.NET","core.command.usage",new ChatArg("%c", usage));
             return true;
         }
+
             Language lang = LanguageManager.getInstance().getLanguage(args[0]);
             if(lang == null){
                 Chat.sendMessage(sender, MessageType.ERROR, "Vontex.NET", "core.error.languageNotExist", new ChatArg("%c", args[0]));
                 return true;
             }
             HashMap<String, String> keys = lang.getKeys();
-            ConfigurationFile file = new ConfigurationFile("languages/" + lang.getName() + ".yml");
+            ConfigurationFile file = new ConfigurationFile("languages/" + lang.getId() + ".yml");
             file.options().copyDefaults(true);
+            file.addDefault("config.onlyservermode", false);
+            file.addDefault("config.deleteothers", false);
 
             for(Map.Entry<String, String> entry : keys.entrySet())
                 file.addDefault(entry.getKey(), entry.getValue());

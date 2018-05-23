@@ -4,5 +4,8 @@ author: Stormfox2
 main: de.stormfox2.core.Core
 commands:
   export:
-    description: Your description
+    description: Export
     usage: /export <language>
+  import:
+    description: Import
+    usage: /import <language>
